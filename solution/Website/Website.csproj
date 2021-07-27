@@ -7,10 +7,13 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <UserSecretsId>1ba77e0f-65ae-4399-88e3-8c0a4622849a</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,22 +31,6 @@
     <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
     <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>
-
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
-
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)build\**" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </ResolvedFileToPublish>
-    </ItemGroup>
   </Target>
 
 </Project>
