@@ -1,13 +1,14 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# escape=`
 
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat
+ARG BASE_IMAGE
+ARG BUILD_IMAGE
+ARG NODE_IMAGE
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM ${BASE_IMAGE} AS base
 WORKDIR /app
 EXPOSE 5050
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM ${BUILD_IMAGE} AS build
 WORKDIR /src
 COPY ["Website/Website.csproj", "Website/"]
 RUN dotnet restore "Website/Website.csproj"
@@ -18,7 +19,7 @@ RUN dotnet build "Website.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "Website.csproj" -c Release -o /app/publish
 
-FROM stefanscherer/node-windows:latest AS node-builder
+FROM ${NODE_IMAGE} AS node-builder
 WORKDIR /node
 WORKDIR /
 COPY ["Website/ClientApp", "node/"]
