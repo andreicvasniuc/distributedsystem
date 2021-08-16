@@ -3,10 +3,13 @@
 ARG BASE_IMAGE
 ARG BUILD_IMAGE
 ARG NODE_IMAGE
+# ARG BUILD_CONFIGURATION
 
 FROM ${BASE_IMAGE} AS base
 WORKDIR /app
 EXPOSE 5050
+
+# ENV BUILD_CONFIGURATION=${BUILD_CONFIGURATION}
 
 FROM ${BUILD_IMAGE} AS build
 WORKDIR /src
@@ -24,7 +27,7 @@ WORKDIR /node
 WORKDIR /
 COPY ["Website/ClientApp", "node/"]
 WORKDIR /node
-RUN npm install
+RUN npm install --silent
 RUN npm run build
 
 FROM base AS final
