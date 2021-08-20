@@ -1,3 +1,4 @@
+using EasyNetQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,9 @@ namespace Website
             {
                 configuration.RootPath = "wwwroot";
             });
+
+            var bus = RabbitHutch.CreateBus(Configuration.GetConnectionString("AMQP"));
+            services.AddSingleton<IBus>(bus);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
