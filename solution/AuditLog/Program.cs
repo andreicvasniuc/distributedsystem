@@ -20,7 +20,7 @@ namespace AuditLog
             var bus = RabbitHutch.CreateBus(amqp);
             await bus.PubSub.SubscribeAsync<WeatherForecastMessage>(SUBSCRIBER_ID, Handler);
             Console.WriteLine("Listening for WeatherForecastMessage messages");
-            Console.ReadKey(false);
+            Console.Read();
         }
 
         private static void Handler(WeatherForecastMessage message)
