@@ -6,16 +6,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="..\IconServer\Protos\icon.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EasyNetQ" Version="6.3.1" />
     <PackageReference Include="Google.Protobuf" Version="3.17.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.39.0" />
     <PackageReference Include="Grpc.Tools" Version="2.39.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Messages\Messages.csproj" />
   </ItemGroup>
 
 </Project>
