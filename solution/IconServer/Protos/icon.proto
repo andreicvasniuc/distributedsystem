@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "IconServer";
+
+package icon;
+
+service Iconer {
+  rpc GetIcon (IconRequest) returns (IconReply);
+}
+
+message IconRequest {
+  string weatherSummary = 1;
+}
+
+message IconReply {
+  string iconUrl = 1;
+}
