@@ -14,6 +14,7 @@ EXPOSE 5050
 FROM ${BUILD_IMAGE} AS build
 WORKDIR /src
 COPY ["Website/Website.csproj", "Website/"]
+COPY ["Messages/Messages.csproj", "Messages/"]
 RUN dotnet restore "Website/Website.csproj"
 COPY . .
 WORKDIR "/src/Website"
