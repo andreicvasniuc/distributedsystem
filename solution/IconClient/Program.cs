@@ -18,17 +18,18 @@ namespace IconClient
 
         const string SUBSCRIBER_ID = "IconClient";
 
-        private static Iconer.IconerClient grpcClient;
+        private static Iconer.IconerClient _grpcClient;
+        private static IBus _bus;
 
         static async Task Main(string[] args)
         {
             // Connect to gRPC
             using var channel = GrpcChannel.ForAddress(IconServerAddress);
-            grpcClient = new Iconer.IconerClient(channel);
+            _grpcClient = new Iconer.IconerClient(channel);
 
             // Connect to EasyNetQ
-            var bus = RabbitHutch.CreateBus(AMQP);
-            await bus.PubSub.SubscribeAsync<WeatherForecastMessage>(SUBSCRIBER_ID, GetIconByWeather);
+            _bus = RabbitHutch.CreateBus(AMQP);
+            await _bus.PubSub.SubscribeAsync<WeatherForecastMessage>(SUBSCRIBER_ID, GetIconByWeather);
 
             Console.WriteLine("Ready.");
             Console.Read();
@@ -36,11 +37,16 @@ namespace IconClient
 
         private static void GetIconByWeather(WeatherForecastMessage message)
         {
-            Console.WriteLine(message.WeatherSummary);
+            Console.WriteLine($"Getting icon for wheather: {message.WeatherSummary}");
 
-            var reply = grpcClient.GetIcon(new IconRequest { WeatherSummary = message.WeatherSummary });
+            var reply = _grpcClient.GetIcon(new IconRequest { WeatherSummary = message.WeatherSummary });
 
-            Console.WriteLine(reply.IconUrl);
+            Console.WriteLine($"Sending icon for wheather: {reply.IconUrl}");
+
+            var weatherIconMessage = new WeatherIconMessage { WeatherSummary = message.WeatherSummary, WeatherIconUrl = reply.IconUrl };
+            _bus.PubSub.Publish<WeatherIconMessage>(weatherIconMessage);
+
+            Console.WriteLine($"Done.");
         }
 
         private static IConfigurationRoot ReadConfiguration()

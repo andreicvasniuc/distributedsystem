@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconClient", "IconClient\Ic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconServer", "IconServer\IconServer.csproj", "{2BE9677A-9C51-4F54-8E5F-BB61D8C5EBBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifier", "Notifier\Notifier.csproj", "{7847CDD7-8E61-421D-AA77-6570BF1E4429}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,5 +144,17 @@ Global
 		{2BE9677A-9C51-4F54-8E5F-BB61D8C5EBBC}.Release|x64.Build.0 = Release|Any CPU
 		{2BE9677A-9C51-4F54-8E5F-BB61D8C5EBBC}.Release|x86.ActiveCfg = Release|Any CPU
 		{2BE9677A-9C51-4F54-8E5F-BB61D8C5EBBC}.Release|x86.Build.0 = Release|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Debug|x64.Build.0 = Debug|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Debug|x86.Build.0 = Debug|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Release|x64.ActiveCfg = Release|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Release|x64.Build.0 = Release|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Release|x86.ActiveCfg = Release|Any CPU
+		{7847CDD7-8E61-421D-AA77-6570BF1E4429}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
