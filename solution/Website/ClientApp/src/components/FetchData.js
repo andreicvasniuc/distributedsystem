@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { HubConnectionBuilder } from '@microsoft/signalr';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
@@ -10,6 +13,33 @@ export class FetchData extends Component {
 
   componentDidMount() {
     this.populateWeatherData();
+    this.createHubConnection();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate', prevProps, prevState);
+    console.log('hubConnection in componentDidUpdate', prevState.hubConnection, this.state.hubConnection);
+}
+
+  createHubConnection() {
+    const hubConnection = new HubConnectionBuilder()
+          .withUrl('http://localhost:4000/hub')
+          .withAutomaticReconnect()
+          .build();
+    
+    console.log('hubConnection', hubConnection);
+
+    hubConnection.start().then(result => {
+      console.log('Connected!');
+
+      hubConnection.on('DisplayNotification', (user, message) => {
+        const json = JSON.parse(message);
+        console.log('DisplayNotification', user, message, json);
+        toast(() => <img src={json.weatherIconUrl} alt="" />);
+      });
+    });
+
+    //this.setState(prevState => ({ ...prevState, hubConnection }));
   }
 
   static renderForecastsTable(forecasts) {
@@ -37,6 +67,8 @@ export class FetchData extends Component {
     );
   }
 
+  loadMore = () => this.populateWeatherData();
+
   render() {
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>
@@ -46,7 +78,11 @@ export class FetchData extends Component {
       <div>
         <h1 id="tabelLabel" >Weather forecast</h1>
         <p>This component demonstrates fetching data from the server.</p>
+        <div>
+          <button onClick={this.loadMore}>Load More</button>
+        </div>
         {contents}
+        <ToastContainer />
       </div>
     );
   }
@@ -54,6 +90,7 @@ export class FetchData extends Component {
   async populateWeatherData() {
     const response = await fetch('weatherforecast');
     const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
+    console.log('data', data, this.state.forecasts, [...this.state.forecasts, ...data]);
+    this.setState(prevState => ({ ...prevState, forecasts: [...prevState.forecasts, ...data], loading: false }));
   }
 }
