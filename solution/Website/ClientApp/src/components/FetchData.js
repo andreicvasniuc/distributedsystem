@@ -23,7 +23,7 @@ export class FetchData extends Component {
 
   createHubConnection() {
     const hubConnection = new HubConnectionBuilder()
-          .withUrl('http://localhost:4000/hub')
+          .withUrl(`${window.location.origin}/hub`)
           .withAutomaticReconnect()
           .build();
     
